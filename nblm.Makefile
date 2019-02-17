@@ -39,22 +39,24 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 #asyn_VERSION=$(ASYN_DEP_VERSION)
 #endif
 
-#ifneq ($(strip $(SEQUENCER_DEP_VERSION)),)
-#sequencer_VERSION=$(SEQUENCER_DEP_VERSION)
-#endif
+ifneq ($(strip $(NDS3EPICS_DEP_VERSION)),)
+NDS3EPICS_VERSION=$(NDS3EPICS_DEP_VERSION)
+endif
 
 
 
 ## Exclude linux-ppc64e6500
 ##EXCLUDE_ARCHS = linux-ppc64e6500
 
+APP:=nblmapp
+APPDB:=$(APP)/db
+APPSRC:=$(APP)/src
 
-# APP:=calcApp
-# APPDB:=$(APP)/Db
-# APPSRC:=$(APP)/src
 
+USR_INCLUDES += -I$(where_am_I)$(APPSRC)
+USR_INCLUDES += -I$(where_am_I)$(APPSRC)/include
+USR_INCLUDES += -I$(where_am_I)$(APPSRC)/include/etc
 
-# USR_INCLUDES += -I$(where_am_I)$(APPSRC)
 
 # USR_CFLAGS   += -Wno-unused-variable
 # USR_CFLAGS   += -Wno-unused-function
@@ -62,6 +64,11 @@ include $(E3_REQUIRE_CONFIG)/DECOUPLE_FLAGS
 # USR_CPPFLAGS += -Wno-unused-variable
 # USR_CPPFLAGS += -Wno-unused-function
 # USR_CPPFLAGS += -Wno-unused-but-set-variable
+
+
+#-std=c++0x -DIS_EEE_MODULE -DIS_EEE_MODULE_NO_TRACE -fpermissive
+
+
 
 # TEMPLATES += $(wildcard $(APPDB)/*.db)
 # TEMPLATES += $(wildcard $(APPDB)/*.db)
